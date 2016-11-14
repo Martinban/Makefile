@@ -1,0 +1,28 @@
+---
+title: "report.rmd"
+author: "Fuqiang Ban"
+date: "November 14, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+---
+title: "Histogram of English Word Lengths"
+author: "Martin Ban"
+date: "2016-11-14"
+---
+
+![*Fig. 1* A histogram of English word lengths](histogram.png)
+
+```{r load-data}
+data <- read.delim("histogram.tsv")
+```
+
+```{r analyze-data}
+most.common.length <- data$Length[which.max(data$Freq)]
+```
+
+The most common English word length is `r most.common.length`.

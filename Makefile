@@ -1,10 +1,10 @@
-all: clean words.txt histogram.tsv histogram.png
+all: clean report.html
 
 words.txt:
 	Rscript -e 'download.file("http://svnweb.freebsd.org/base/head/share/dict/web2?view=co", destfile = "words.txt", quiet = TRUE)'
 
 clean:
-	rm -f words.txt histogram.tsv
+	rm -f words.txt histogram.tsv histogram.png report.md report.html
 	
 	
 #$< 1st dependency, $@ output, $*%html:%rmd:%tsv
@@ -25,4 +25,7 @@ histogram.tsv: histogram.r words.txt
 histogram.png: histogram.tsv
 	Rscript -e 'library(ggplot2); qplot(Length, Freq, data=read.delim("$<")); ggsave("$@")'
 	rm Rplots.pdf
+report.html: report.rmd histogram.tsv histogram.png
+	Rscript -e 'rmarkdown::render("$<")'
+
 	
